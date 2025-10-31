@@ -19,12 +19,14 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   const projectsPerPage = 10;
   const { projects } = loaderData as { projects: Project[] };
   // get unique cats
+  // You add in alll then create a new set where you use map to get all project catefories and add them to the array
   const categories = [
     "All",
     ...new Set(projects.map((project) => project.category)),
   ];
 
   //fitler projects based on cat
+  //If all is selected them you show projects else you filter the projects based on selected catergory
   const filteredProjects =
     selectedCategory === "All"
       ? projects
@@ -35,12 +37,14 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
   //Get current pages projects.
   const indexOfLast = currentPage * projectsPerPage;
   const indexOfFirst = indexOfLast - projectsPerPage;
+  //You display the filtered categories. 
   const currentProjects = filteredProjects.slice(indexOfFirst, indexOfLast);
 
   return (
     <>
       <h2 className="text-3xl text-white font-bold mb-8">Projects</h2>
       <div className="flex flex-wrap gap-2 mb-8">
+        {/* Added button for all the categories. The onclick action sets the selected category. Also set page to 1. */}
         {categories.map((category) => (
           <button
             key={category}
