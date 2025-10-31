@@ -3,10 +3,11 @@ import type { Route } from "./+types/index";
 import type { Project } from "~/types";
 import ProjectCard from "~/components/ProjectCard";
 import Pagination from "~/components/Pagination";
+import {AnimatePresence, motion} from "framer-motion";
 export async function loader({
   request,
 }: Route.LoaderArgs): Promise<{ projects: Project[] }> {
-  const res = await fetch("http://localhost:8000/projects");
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`);
   const data = await res.json();
 
   return { projects: data };
@@ -58,11 +59,13 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
           </button>
         ))}
       </div>
-      <div className="grid gap-6 sm:grid-cols-2">
+      <AnimatePresence mode="wait">
+      <motion.div layout  className="grid gap-6 sm:grid-cols-2">
         {currentProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+            <motion.div key={project.id} layout>
+          <ProjectCard  project={project} /></motion.div>
         ))}
-      </div>
+      </motion.div></AnimatePresence>
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}

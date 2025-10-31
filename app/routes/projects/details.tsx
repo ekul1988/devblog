@@ -8,7 +8,7 @@ export async function clientLoader({
   params,
 }: Route.ClientLoaderArgs): Promise<Project> {
   const { id } = params as { id: string };
-  const res = await fetch(`http://localhost:8000/projects/${id}`);
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${id}`);
 
   if (!res.ok) throw new Response("Project not found.", { status: 404 });
   const project: Project = await res.json();
