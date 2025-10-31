@@ -39,7 +39,7 @@ const ProjectDetailsPage = ({ loaderData }: Route.ComponentProps) => {
                 {new Date(project.date).toLocaleDateString()} - {project.category}
             </p>
             <p className="text-gray-200 mb-6">{project.description}</p>
-            <a href={project.url} target="_black" className="inline-block text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded transition" >View Live Site </a>
+            <a href={project.url} target="_blank" className="inline-block text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded transition" >View Live Site </a>
         </div>
       </div>
     </>
