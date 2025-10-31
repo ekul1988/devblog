@@ -1,6 +1,11 @@
 import { Link } from 'react-router';
 
-const Hero = ({
+type HeroProps ={
+  name?:string;
+  text?:string;
+}
+
+const Hero: React.FC<HeroProps> = ({
   name = 'Luke',
   text = ' I build modern web experiences.',
 }) => {
