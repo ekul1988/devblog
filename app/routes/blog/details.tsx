@@ -3,7 +3,11 @@ import type { Route } from "./+types";
 import type { PostMeta } from "~/types";
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-  const { slug } = params as { slug: string };
+
+
+  const { slug } = params as { slug: string }; //<--- I had to ad type to not get type error. Brad didn't have that in his video. 
+
+
   const url = new URL("/post-meta.json", request.url);
   const res = await fetch(url.href);
   if (!res.ok) throw new Error("Failed to fetch data");
@@ -21,10 +25,17 @@ export async function loader({ request, params }: Route.LoaderArgs) {
     markdown: markdown.default,
   };
 }
+type BlogPostDetailsPageProps = {
+    loaderData: {
+        postMeta: PostMeta;
+        markdown: string
+    }
+}
 
-const BlogDetailsPage = ({ loaderData }: Route.ComponentProps) => {
-  const { postMeta, markdown } = loaderData;
+const BlogPostDetailsPage = ({ loaderData }: BlogPostDetailsPageProps) => {
+  const { postMeta, markdown } = loaderData; //<---Also getting a type error here when brad did not have one in his video. 
+  console.log(postMeta, markdown)
   return <>blog</>;
 };
 
-export default BlogDetailsPage;
+export default BlogPostDetailsPage;
