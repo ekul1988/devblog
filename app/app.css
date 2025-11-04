@@ -1,5 +1,6 @@
 @import "tailwindcss";
-
+/* Import a specific plugin */
+@plugin "@tailwindcss/typography"; 
 @theme {
   --font-sans:
     "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",

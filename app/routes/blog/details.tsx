@@ -1,14 +1,14 @@
 import ReactMarkDown from "react-markdown";
 import type { Route } from "./+types";
 import type { PostMeta } from "~/types";
-
+import { Link } from "react-router";
 export async function loader({ request, params }: Route.LoaderArgs) {
 
 
-  const { slug } = params as { slug: string }; //<--- I had to ad type to not get type error. Brad didn't have that in his video. 
+  const { slug } = params as { slug: string }; 
+  console.log(slug)
 
-
-  const url = new URL("/post-meta.json", request.url);
+  const url = new URL("/posts-meta.json", request.url);
   const res = await fetch(url.href);
   if (!res.ok) throw new Error("Failed to fetch data");
   // this gets all the posts
@@ -33,9 +33,19 @@ type BlogPostDetailsPageProps = {
 }
 
 const BlogPostDetailsPage = ({ loaderData }: BlogPostDetailsPageProps) => {
-  const { postMeta, markdown } = loaderData; //<---Also getting a type error here when brad did not have one in his video. 
-  console.log(postMeta, markdown)
-  return <>blog</>;
+  const { postMeta, markdown } = loaderData; 
+ 
+  return <div className="max-w-3xl mx-auto px-6 py-13 bg-gray-900">
+    <h1 className="text-3xl font-bold text-blue-400 mb-2">
+{postMeta.title}
+
+    </h1>
+    <p className="text-sm text-gray-400 mb-6">{new Date(postMeta.date).toLocaleDateString()}</p>
+    <div className="prose prose-invert max-w-none mb-12">
+      <ReactMarkDown>{markdown}</ReactMarkDown>
+    </div>
+    <Link to='/blog' className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 tansition"> Back to posts</Link>
+  </div>;
 };
 
 export default BlogPostDetailsPage;
