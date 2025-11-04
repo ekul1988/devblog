@@ -4,7 +4,6 @@ import type { Route } from "./+types/index";
 import type { PostMeta } from "~/types";
 import PostCard from "~/components/PostCard";
 import PostFilter from "~/components/PostFilter";
-
 export async function loader({
   request,
 }: Route.LoaderArgs): Promise<{ posts: PostMeta[] }> {
